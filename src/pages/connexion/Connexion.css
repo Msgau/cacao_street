@@ -1,0 +1,50 @@
+.loginPage, .loginPage button {
+    color: white;
+}
+
+.loginPage {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 50px auto auto auto;
+    background-color: #101010;
+    border-radius: 10px;
+    width: 400px;
+    padding: 10px;
+}
+.loginPage form {
+    width: 100%;
+}
+.loginPage form div {
+    display: flex;
+    justify-content: space-between;
+}
+.loginPage input {
+    width: 250px;
+}
+.loginPage button {
+    margin: auto;
+    border: 1px solid white;
+}
+.connexion {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.connexion, .connexion div {
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.connexion p {
+    text-decoration: underline;
+}
+.connexion a {
+    color: white;
+    text-decoration: none;
+}
+.connexion p:hover {
+    text-decoration: none;
+}

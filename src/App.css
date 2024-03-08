@@ -1,0 +1,20 @@
+.version {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  width: 300px;
+  color: #ffffff;
+}
+
+* {
+  /* color: white; */
+  box-sizing: border-box;
+}
+
+.addPlace {
+  margin: 10px 50px 10px 0;
+  color: white;
+  width: 95%;
+  display: flex;
+  justify-content: end;
+}

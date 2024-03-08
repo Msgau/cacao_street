@@ -1,0 +1,40 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    max-width: 1300px;
+    margin: auto;
+    color: white;
+    background-color: #101010;
+    border-radius: 0 0 10px 10px;
+}
+header h1 {
+    margin: 0;
+}
+header a {
+        text-decoration: none;
+        color: white;
+}
+
+header ul a:hover  {
+    text-decoration: underline;
+    color: white;
+}
+header nav {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+}
+header ul {
+        display: flex;
+        justify-content: space-between;
+        width: 250px;
+        list-style-type: none;
+}
+.addPlace {
+margin: 0 30px 10px 0;
+width: 100%;
+text-align: right;
+}

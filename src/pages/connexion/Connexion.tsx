@@ -1,0 +1,81 @@
+import React, { useState } from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import Header from '../../components/Header/Header';
+import AuthService from '../../services/auth.service';
+import './Connexion.css';
+
+const Login: React.FC = () => {
+  const [error, setError] = useState('');
+
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required('This field is required!'),
+    email: Yup.string().email('Invalid email').required('This field is required!'),
+    password: Yup.string().required('This field is required!'),
+  });
+
+  const handleSubmit = async (formValues: { username: string; email: string; password: string }) => {
+    const { username, email, password } = formValues;
+    console.log(formValues);
+    try {
+      const response = await AuthService.login(email, username, password);
+      console.log(response)
+      const token = response.accessToken;
+      console.log(token)
+      if (token) {
+        console.log("connecté");
+        localStorage.setItem('token', token);
+        navigate('/home');
+      } else {
+        setError('Erreur de connexion');
+      }
+    } catch (error) {
+      setError('Identifiants incorrects');
+    }
+  };
+  const navigate = useNavigate();
+
+  const initialValues = {
+    username: '',
+    email: '',
+    password: '',
+  };
+
+  return (
+    <div>
+      <Header />
+      <div className="loginPage">
+        <h2>Connexion</h2>
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+          <Form>
+            <div>
+              <label>Nom d'utilisateur:</label>
+              <Field type="text" name="username" required />
+              <ErrorMessage name="username" component="div" />
+            </div>
+            <div>
+              <label>Email :</label>
+              <Field type="text" name="email" required />
+              <ErrorMessage name="email" component="div" />
+            </div>
+            <div>
+              <label>Mot de passe:</label>
+              <Field type="password" name="password" required />
+              <ErrorMessage name="password" component="div" />
+            </div>
+            <div className="connexion">
+              {error && <div>{error}</div>}
+              <button type="submit">Se connecter</button>
+              <p>
+                <NavLink to="/signup">Créer un compte</NavLink>
+              </p>
+            </div>
+          </Form>
+        </Formik>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

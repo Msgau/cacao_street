@@ -1,0 +1,62 @@
+.pac-target-input {
+  margin: 10px auto;
+  width: 100%;
+}
+
+.autocomplete-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.map-container {
+  margin: auto;
+  max-width: 1300px;
+}
+
+.homeMap {
+    height: 78vh;
+    width: 90%;
+    margin: 0 0 0 0;
+    max-width: 1300px;
+    margin: auto;
+}
+.unroll {
+  background-color: rgb(158, 158, 158);
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px 5px 5px;
+  color: white;
+  min-width: 150px;
+}
+
+.openDay,
+.closedDay {
+  margin-left: 5px;
+}
+
+.visible p {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Styles pour la modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal button {
+  background-color: white;
+  border: 1px solid black;
+}
+.bouton {
+  display: flex;
+  justify-content: end;
+}

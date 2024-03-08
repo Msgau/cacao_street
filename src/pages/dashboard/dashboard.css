@@ -1,0 +1,53 @@
+.dashboard {
+    max-width: 1300px;
+    margin: auto;
+}
+.dashboardMain {
+    display: flex;
+    margin: 20px auto;
+    color: white;
+}
+
+.dashboardMap {
+    height: 50vh;
+    width: 100%;
+    margin: 0 0 0 0;
+}
+
+.usersRequest {
+    width: 450px;
+    height: 85vh;
+    margin: 0 20px;
+    background-color: rgb(29, 26, 26);
+    border-radius: 10px;
+}
+.usersRequest h2 {
+    margin: auto;
+    width: 90%;
+}
+.resultsBdd {
+    height: 20vh;
+    margin : 10px 0 20px 0;
+    border: 1px solid white;
+}
+.dashboard .right {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 20px;
+}
+.exempleUser {
+    width: 90%;
+    height: 15vh;
+    background-color: white;
+    margin: 20px auto;
+    color: black;
+    border-radius: 10px;
+}
+.exempleUser h3 {
+    margin: auto;
+    width: 90%;
+}
+.exempleUser button {
+    color: white;
+}
