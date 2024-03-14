@@ -1,19 +1,42 @@
 
-
 .postEmplacement {
     color: white;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    width: 300px;
+    align-items: center;
+    width: 800px;
     margin: 100px auto;
 }
 
-.postEmplacement input, .postEmplacement button {
+.postEmplacement input {
     margin: 0 0 30px 50px;
     color: black;
 }
-
 .postEmplacement button {
+    margin: 30px 0 10px 0;
+}
+.formOk {
     background-color: chocolate;
+}
+.formNotOk {
+    background-color: grey;
+    opacity: 80%;
+    color: white;
+}
+.formNotOk:hover {
+    border: none;
+}
+.formNotOk input {
+    color: white
+}
+.postEmplacement input {
+    width : 500px;
+    margin: 10px auto;
+}
+.postEmplacement p {
+    width: 100%;
+    margin: 5px auto;
+    text-align: center;
 }

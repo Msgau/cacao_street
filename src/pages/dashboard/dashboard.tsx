@@ -1,8 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import "./dashboard.css";
 import MapTool from "../../components/map/MapTool";
+import NewPlace from "../../components/DashboardRequest/NewPlace";
+import axios from "axios";
+import data from "../../data/data.json"; // Importer les données du fichier JSON
+
 interface User {
     id: number;
     username: string;
@@ -10,17 +14,45 @@ interface User {
     roles: string[];
 }
 
-const Dashboard: React.FC = () => {
-    // Récupérer les informations de l'utilisateur depuis le local storage
-    const user: User | null = JSON.parse(localStorage.getItem("user") || "null");
+interface Shop {
+    id: number;
+    name: string;
+    addressShop: string;
+    position: string;
+    price: number;
+    hours: string | null;
+}
+interface Shop {
+    id: number;
+    name: string;
+    addressShop: string;
+    position: string;
+    price: number;
+    hours: string | null;
+}
 
-    // Vérifier si l'utilisateur est connecté et a le rôle ROLE_ADMIN
+const Dashboard: React.FC = () => {
+    const user: User | null = JSON.parse(localStorage.getItem("user") || "null");
     const isAdmin: boolean =
         !!user && !!user.roles && user.roles.includes("ROLE_ADMIN");
-
     const navigate = useNavigate();
+    const [shops, setShops] = useState<Shop[]>([]);
 
-    // Rediriger vers la page d'accueil si l'utilisateur n'est pas un admin
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get<Shop[]>("http://localhost:8989/chocolate");
+                const shopsValidation = response.data.data
+                console.log(response);
+                console.log(shopsValidation);
+                setShops(shopsValidation);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
+    }, []);
+
     useEffect(() => {
         if (!isAdmin) {
             navigate("/home");
@@ -35,34 +67,25 @@ const Dashboard: React.FC = () => {
         <div>
             <Header />
             <div className="dashboard">
-
                 <div className="dashboardMain">
                     <div className="usersRequest">
                         <h2>Requêtes utilisateurs</h2>
-                        <div className="exempleUser">
-                            <h3>Requête utilisateur 1</h3>
-                            <p>message utilisateur</p>
-                            <button>agrandir</button>
-                        </div>
-                        <div className="exempleUser">
-                            <h3>Requête utilisateur 2</h3>
-                            <p>Données gmaps fournies</p>
-                            <button>modifier</button>
-                            <button>valider</button>
-                            <button>X</button>
-                        </div>
+
+                        {shops.map((shop) => {
+                            return (
+                                <NewPlace
+                                    key={shop.id} 
+                                    placeName={shop.name} 
+                                    placeDetails={`${shop.position}, ${shop.price}`}
+                                />
+                            );
+                        })}
                     </div>
                     <div className="right">
-                        <input type="text"
-                            className="searchDtb"
-                            placeholder="Recherche dans la base de données" />
-                        <div className="resultsBdd">
-                            Résultats recherche BDD
-                        </div>
+                        <input type="text" className="searchDtb" placeholder="Recherche dans la base de données" />
+                        <div className="resultsBdd">Résultats recherche BDD</div>
                         <div className="dashboardMapContainer">
-                            <MapTool
-                                classNameMap={"dashboardMap"}
-                            />
+                            <MapTool classNameMap={"dashboardMap"} />
                         </div>
                     </div>
                 </div>

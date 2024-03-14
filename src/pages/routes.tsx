@@ -18,7 +18,7 @@ function RouteConfiguration() {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/*" element={<Error404 />} />
-            <Route path="/addPlace" element={<PostEmplacement />} />
+            <Route path="/addplace" element={<PostEmplacement />} />
             <Route path="/login" element={<Login />} />
             <Route path="/login2" element={<Login2 />} />
             <Route path="/signup" element={<SignUp />} />       

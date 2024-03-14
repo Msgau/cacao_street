@@ -13,7 +13,7 @@ interface User {
 const Header: React.FC = () => {
   // Récupérer les informations de l'utilisateur depuis le local storage
   const userString = localStorage.getItem("user");
-  const user: User | null = userString ? JSON.parse(userString) : null;  
+  const user: User | null = userString ? JSON.parse(userString) : null;
 
   // Vérifier si l'utilisateur est connecté
   const isLoggedIn: boolean =
@@ -31,12 +31,13 @@ const Header: React.FC = () => {
 
   return (
     <header>
+      <div className="baseHeader">
+      <h1>
+        <NavLink to="/home" className="home">
+          CACAOSTREET
+        </NavLink>
+      </h1>
       <nav>
-        <h1>
-          <NavLink to="/home" className="home">
-            CACAOSTREET
-          </NavLink>
-        </h1>
         <ul>
           <li>Accueil</li>
           {/* Vérifier si l'utilisateur est connecté et a le rôle ROLE_USER */}
@@ -49,6 +50,9 @@ const Header: React.FC = () => {
                   </NavLink>
                 </li>
               )}
+              <li>
+                Mes cacaos
+              </li>
               <li>
                 <NavLink
                   to="/home"
@@ -69,11 +73,14 @@ const Header: React.FC = () => {
           {/* <li>Mes cacaos</li> */}
         </ul>
       </nav>
-      <div className="addPlace">
-        <NavLink to="/addPlace" className="addPlaceLink">
-          Ajouter un emplacement
-        </NavLink>
       </div>
+      {isLoggedIn ? (
+        <div className="addPlace">
+          <NavLink to="/addPlace" className="addPlaceLink">
+            Ajouter un emplacement
+          </NavLink>
+        </div>
+      ) : ""}
     </header>
   );
 };
