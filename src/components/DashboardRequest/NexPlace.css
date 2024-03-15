@@ -1,0 +1,36 @@
+.exempleUser {
+    width: 90%;
+    height: 150px;
+    background-color: rgb(209, 209, 209);
+    margin: 15px auto;
+    color: black;
+    border-radius: 10px;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+}
+.exempleUser h3 {
+    margin: 0 0 0 5px;
+    width: 90%;
+}
+.exempleUser p {
+    margin: 0 0 0 5px;
+    white-space: nowrap;
+    font-size: 0.9em;
+}
+.priceOpening{
+    display: flex;
+}
+.masquer {
+    display: none;
+}
+.exempleUser button {
+    color: white;
+    padding: 5px 15px;
+}
+.buttonsUserRequest {
+    display: flex;
+    justify-content: space-around;
+}

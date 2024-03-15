@@ -17,9 +17,10 @@
 .usersRequest {
     width: 450px;
     height: 85vh;
-    margin: 0 20px;
+    margin: 0;
     background-color: rgb(29, 26, 26);
     border-radius: 10px;
+    overflow-y: auto;
 }
 .usersRequest h2 {
     margin: auto;
@@ -34,20 +35,5 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin: 0 20px;
-}
-.exempleUser {
-    width: 90%;
-    height: 15vh;
-    background-color: white;
-    margin: 20px auto;
-    color: black;
-    border-radius: 10px;
-}
-.exempleUser h3 {
-    margin: auto;
-    width: 90%;
-}
-.exempleUser button {
-    color: white;
+    margin: 0 10px;
 }

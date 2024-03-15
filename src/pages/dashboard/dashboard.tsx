@@ -5,7 +5,6 @@ import "./dashboard.css";
 import MapTool from "../../components/map/MapTool";
 import NewPlace from "../../components/DashboardRequest/NewPlace";
 import axios from "axios";
-import data from "../../data/data.json"; // Importer les données du fichier JSON
 
 interface User {
     id: number;
@@ -43,7 +42,6 @@ const Dashboard: React.FC = () => {
             try {
                 const response = await axios.get<Shop[]>("http://localhost:8989/chocolate");
                 const shopsValidation = response.data.data
-                console.log(response);
                 console.log(shopsValidation);
                 setShops(shopsValidation);
             } catch (error) {
@@ -63,20 +61,33 @@ const Dashboard: React.FC = () => {
         return null;
     }
 
+    const handleDelete = async (id: number) => {
+        try {
+            await axios.delete(`http://localhost:8989/chocolate/${id}`);
+            // Mettre à jour le dom
+            setShops(shops.filter(shop => shop.id !== id));
+        } catch (error) {
+            console.error("Error deleting shop:", error);
+        }
+    };
+    
     return (
         <div>
             <Header />
             <div className="dashboard">
                 <div className="dashboardMain">
                     <div className="usersRequest">
-                        <h2>Requêtes utilisateurs</h2>
-
                         {shops.map((shop) => {
                             return (
                                 <NewPlace
+                                    id={shop.id}
                                     key={shop.id} 
-                                    placeName={shop.name} 
-                                    placeDetails={`${shop.position}, ${shop.price}`}
+                                    placeName={shop.name}
+                                    addressShop={shop.addressShop}
+                                    price = {shop.price}
+                                    placeDetails={`${shop.position}`}
+                                    onDelete={() => handleDelete(shop.id)}
+                                    closing={shop.hours}
                                 />
                             );
                         })}
