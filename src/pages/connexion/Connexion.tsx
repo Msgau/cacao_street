@@ -11,15 +11,14 @@ const Login: React.FC = () => {
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('This field is required!'),
-    email: Yup.string().email('Invalid email').required('This field is required!'),
     password: Yup.string().required('This field is required!'),
   });
 
-  const handleSubmit = async (formValues: { username: string; email: string; password: string }) => {
-    const { username, email, password } = formValues;
+  const handleSubmit = async (formValues: { username: string; password: string }) => {
+    const { username, password } = formValues;
     console.log(formValues);
     try {
-      const response = await AuthService.login(email, username, password);
+      const response = await AuthService.login(username, password);
       console.log(response)
       const token = response.accessToken;
       console.log(token)
@@ -38,7 +37,6 @@ const Login: React.FC = () => {
 
   const initialValues = {
     username: '',
-    email: '',
     password: '',
   };
 
@@ -53,11 +51,6 @@ const Login: React.FC = () => {
               <label>Nom d'utilisateur:</label>
               <Field type="text" name="username" required />
               <ErrorMessage name="username" component="div" />
-            </div>
-            <div>
-              <label>Email :</label>
-              <Field type="text" name="email" required />
-              <ErrorMessage name="email" component="div" />
             </div>
             <div>
               <label>Mot de passe:</label>

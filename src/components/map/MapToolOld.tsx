@@ -9,21 +9,10 @@ import config from "../../config";
 import PlaceAutocompleteClassic from "../../components/PlaceAutoComplete/PlaceAutoComplete.jsx";
 import MapHandler from "../../components/map-handler/map-handler.js";
 import HiddenContent from "../../components/HiddentContent/HiddenContent.jsx";
-import cafésData from "../../data/cafés.json";
-
+import formatted from "../../data/cafés";
 
 const API_KEY = config.googleMapsApiKey;
 const MAP_ID = config.mapId;
-const formatted = cafésData.data.map((cafe) => ({
-  name: cafe.name,
-  price: cafe.price,
-  adress: cafe.addressShop,
-  rating: cafe.rating || 0, // Ajoutez une valeur par défaut si rating est null
-  closing: cafe.hours,
-  lat: parseFloat(cafe.position.split(',')[0].slice(1)), // Convertit la position en nombre flottant
-  lng: parseFloat(cafe.position.split(',')[1].slice(0, -1)), // Convertit la position en nombre flottant
-  key: cafe.id.toString(), // Convertit l'ID en chaîne de caractères
-}));
 
 const MapTool = ( {classNameMap} ) => {
   const [userLocation, setUserLocation] = useState(null);

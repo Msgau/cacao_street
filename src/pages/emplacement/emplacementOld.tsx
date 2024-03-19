@@ -6,7 +6,7 @@ import PlaceAutocompleteClassic from "../../components/PlaceAutoComplete/PlaceAu
 import { APIProvider } from "@vis.gl/react-google-maps";
 import config from "../../config";
 import AuthChecker from "../../components/AuthChecker/AuthChecker";
-import joursSemaine from "../../data/joursSemaine.json";
+
 
 export default function PostEmplacement() {
     const API_KEY = config.googleMapsApiKey;
@@ -45,12 +45,10 @@ export default function PostEmplacement() {
         try {
             const token = localStorage.getItem('token');
             const positionString = `(${selectedPosition.geometry.location.lat()}, ${selectedPosition.geometry.location.lng()})`;
-            const postData = { name: name, addressShop: addressShop, position: positionString, price: price, hours: JSON.stringify(hours) };
-            console.log(postData)
+            const postData = { name: name, addressShop: addressShop, position: positionString, price: price, hours: hours };
             const postConfig = {
                 headers: {
-                    // "Authorization": `bearer ${token}`,
-                    "x-access-token": token,
+                    "Authorization": `bearer ${token}`,
                     'Content-Type': 'application/json;charset=UTF-8',
                 }
             };
@@ -65,13 +63,7 @@ export default function PostEmplacement() {
             setError('erreur');
         }
     };
-    const handleDayChange = (dayAbbr, isChecked) => {
-        if (isChecked) {
-            setHours([...hours, dayAbbr]);
-        } else {
-            setHours(hours.filter(item => item !== dayAbbr));
-        }
-    };
+
 
     return (
         <div>
@@ -115,28 +107,17 @@ export default function PostEmplacement() {
                     />
 
                     <label htmlFor="closing">Jours de fermeture (facultatif) :</label>
-                    <ul className="closing-days">
-    {joursSemaine.map(day => (
-        <li key={day.id}>
-            <input
-                type="checkbox"
-                id={day.id}
-                value={day.abbr}
-                checked={hours.includes(day.abbr)}
-                onChange={(e) => handleDayChange(day.abbr, e.target.checked)}
-            />
-            <label htmlFor={day.id}>{day.label}</label>
-        </li>
-    ))}
-</ul>
+                    <input
+                        type="text"
+                        value={hours}
+                        onChange={(e) => setHours(e.target.value)}
+                        placeholder="Jours de fermeture (facultatif)"
+                    />
 
-
-
-
-                    <button
-                        type="submit"
-                        title={selectedPosition ? "Envoyer mon chocolat" : "Remplissez le formulaire avant de l'envoyer ! :)"}
-                        disabled={!allFieldsFilled || !selectedPosition}
+                    <button 
+                        type="submit" 
+                        title={selectedPosition ? "Envoyer mon chocolat" : "Remplissez le formulaire avant de l'envoyer ! :)"} 
+                        disabled={!allFieldsFilled || !selectedPosition} 
                         className={allFieldsFilled && selectedPosition ? "formOk" : "formNotOk"}>
                         Ajouter un chocolat chaud ☕
                     </button>

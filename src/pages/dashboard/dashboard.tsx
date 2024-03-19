@@ -42,7 +42,6 @@ const Dashboard: React.FC = () => {
             try {
                 const response = await axios.get<Shop[]>("http://localhost:8989/chocolate");
                 const shopsValidation = response.data.data
-                console.log(shopsValidation);
                 setShops(shopsValidation);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -61,15 +60,28 @@ const Dashboard: React.FC = () => {
         return null;
     }
 
+    const token = localStorage.getItem("token");
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
+    
     const handleDelete = async (id: number) => {
         try {
-            await axios.delete(`http://localhost:8989/chocolate/${id}`);
+            const token = localStorage.getItem("token");
+            const headers = {
+                "x-access-token": token
+            };
+            await axios.delete(`http://localhost:8989/chocolate/${id}`, { headers });
             // Mettre à jour le dom
             setShops(shops.filter(shop => shop.id !== id));
         } catch (error) {
             console.error("Error deleting shop:", error);
         }
     };
+    
     
     return (
         <div>

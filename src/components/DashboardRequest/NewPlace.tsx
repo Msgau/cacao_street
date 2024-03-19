@@ -1,4 +1,4 @@
-import './NexPlace.css';
+import './NewPlace.css';
 interface NewPlaceProps {
     placeName: string;
     placeDetails: string;
@@ -18,7 +18,7 @@ const NewPlace: React.FC<NewPlaceProps> = ({ placeName, placeDetails, addressSho
             <h3>Nom : {placeName}</h3>
             <p title={addressShop}><b>Adresse :</b> {addressShop}</p>
             <p title={placeDetails}><b>Coordonnées :</b> {placeDetails}</p>
-            <div className='priceOpening'><p><b>Prix :</b> {price}€,</p><p className={closing ? "afficher": "masquer"}><b>fermé le : </b>{closing}</p></div>
+            <div className='priceOpening'><p><b>Prix :</b> {price}€</p><p className={closing ? "afficher": "masquer"}><b>, fermé le : </b>{closing}</p></div>
             
             <div className='buttonsUserRequest'>
                 <button className='putButton'>modifier</button>

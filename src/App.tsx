@@ -1,4 +1,5 @@
 import RouteConfiguration from './pages/routes';
+import './App.css';
 
 const App = () => {
 

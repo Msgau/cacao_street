@@ -40,3 +40,20 @@
     margin: 5px auto;
     text-align: center;
 }
+
+/* menu déroulant */
+
+.closing-days {
+    display: flex;
+    justify-content: space-between;
+    width: 750px;
+    padding: 0;
+    margin: 10px auto;
+}
+.closing-days li {
+    width: 90px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+}

@@ -15,7 +15,7 @@
 }
 
 .usersRequest {
-    width: 450px;
+    width: 380px;
     height: 85vh;
     margin: 0;
     background-color: rgb(29, 26, 26);
@@ -31,9 +31,9 @@
     margin : 10px 0 20px 0;
     border: 1px solid white;
 }
-.dashboard .right {
+.right {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    flex-grow: 1;
     margin: 0 10px;
 }

@@ -1,0 +1,9 @@
+[
+    { "id": "lundi", "label": "Lundi", "abbr": "lun" },
+    { "id": "mardi", "label": "Mardi", "abbr": "mar" },
+    { "id": "mercredi", "label": "Mercredi", "abbr": "mer" },
+    { "id": "jeudi", "label": "Jeudi", "abbr": "jeu" },
+    { "id": "vendredi", "label": "Vendredi", "abbr": "ven" },
+    { "id": "samedi", "label": "Samedi", "abbr": "sam" },
+    { "id": "dimanche", "label": "Dimanche", "abbr": "dim" }
+]
