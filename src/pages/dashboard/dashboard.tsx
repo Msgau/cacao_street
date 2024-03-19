@@ -19,15 +19,7 @@ interface Shop {
     addressShop: string;
     position: string;
     price: number;
-    hours: string | null;
-}
-interface Shop {
-    id: number;
-    name: string;
-    addressShop: string;
-    position: string;
-    price: number;
-    hours: string | null;
+    hours: JSON | null;
 }
 
 const Dashboard: React.FC = () => {

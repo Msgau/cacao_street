@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   APIProvider,
   Map,
@@ -9,39 +9,40 @@ import config from "../../config";
 import PlaceAutocompleteClassic from "../../components/PlaceAutoComplete/PlaceAutoComplete.jsx";
 import MapHandler from "../../components/map-handler/map-handler.js";
 import HiddenContent from "../../components/HiddentContent/HiddenContent.jsx";
-import cafésData from "../../data/cafés.json";
-
+import axios from "axios";
 
 const API_KEY = config.googleMapsApiKey;
 const MAP_ID = config.mapId;
-const formatted = cafésData.data.map((cafe) => ({
-  name: cafe.name,
-  price: cafe.price,
-  adress: cafe.addressShop,
-  rating: cafe.rating || 0, // Ajoutez une valeur par défaut si rating est null
-  closing: cafe.hours,
-  lat: parseFloat(cafe.position.split(',')[0].slice(1)), // Convertit la position en nombre flottant
-  lng: parseFloat(cafe.position.split(',')[1].slice(0, -1)), // Convertit la position en nombre flottant
-  key: cafe.id.toString(), // Convertit l'ID en chaîne de caractères
-}));
 
-const MapTool = ( {classNameMap} ) => {
+const MapTool = ({ classNameMap }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [selectedPosition, setSelectedPosition] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [shops, setShops] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8989/chocolate");
+        setShops(response.data.data);
+        console.log(response.data.data)
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const openModal = () => {
     setIsModalOpen(true);
   };
 
-const closeModal = (e) => {
-  e.stopPropagation(); // Arrête la propagation de l'événement de clic
-  console.log(isModalOpen);
-  setIsModalOpen(false);
-  console.log(isModalOpen);
-};
-
+  const closeModal = (e) => {
+    e.stopPropagation(); // Arrête la propagation de l'événement de clic
+    setIsModalOpen(false); // Met à jour l'état pour fermer la modal
+  };
+  
 
   // Fonction pour déterminer si le lieu est ouvert aujourd'hui
   const isOpenToday = () => {
@@ -61,25 +62,27 @@ const closeModal = (e) => {
   return (
     <div>
       <APIProvider apiKey={API_KEY} version="weekly">
-      <div className={classNameMap}>
+        <div className={classNameMap}>
           <PlaceAutocompleteClassic onPlaceSelect={setSelectedPosition} />
           <MapHandler place={selectedPosition} />
           <Map
             defaultZoom={15}
-            defaultCenter={userLocation || { lat: 48.705047607421875, lng: 2.4535863399505615 }}
+            defaultCenter={
+              userLocation || { lat: 48.705047607421875, lng: 2.4535863399505615 }
+            }
             mapId={MAP_ID}
           >
             <AdvancedMarker
-              position={userLocation || { lat: 48.705047607421875, lng: 2.4535863399505615 }}
+              position={
+                userLocation || { lat: 48.705047607421875, lng: 2.4535863399505615 }
+              }
             >
               <Pin background={"grey"} borderColor={"green"} glyphColor={"purple"} />
             </AdvancedMarker>
 
             {selectedPlace && (
               <>
-                {isModalOpen && (
-                  <div className="overlay" onClick={closeModal}></div>
-                )}
+                {isModalOpen && <div className="overlay" onClick={closeModal}></div>}
                 <div className={`modal ${isModalOpen ? 'open' : ''}`}>
                   <div>
                     <div className="bouton">
@@ -87,10 +90,8 @@ const closeModal = (e) => {
                     </div>
                     <div>Note : {selectedPlace.rating}/5</div>
                     <h3>{selectedPlace.name}</h3>
-                    {selectedPlace.price && (
-                      <p>Prix: {selectedPlace.price} €</p>
-                    )}
-                    <p>{selectedPlace.adress}</p>
+                    {selectedPlace.price && <p>Prix: {selectedPlace.price} €</p>}
+                    <p>{selectedPlace.address}</p>
                     {/* Afficher le statut d'ouverture */}
                     <p>{openStatus}</p>
                     {/* Utilisation du composant HiddenContent pour afficher/masquer les jours d'ouverture */}
@@ -128,7 +129,7 @@ const closeModal = (e) => {
               </>
             )}
 
-            <Markers points={formatted} setSelectedPlace={setSelectedPlace} openModal={openModal} />
+            <Markers shops={shops} setSelectedPlace={setSelectedPlace} openModal={openModal} />
           </Map>
         </div>
       </APIProvider>
@@ -136,22 +137,28 @@ const closeModal = (e) => {
   );
 };
 
-const Markers = ({ points, setSelectedPlace, openModal }) => {
+const Markers = ({ shops, setSelectedPlace, openModal }) => {
   return (
     <>
-      {points.map(
-        ({ name, price, adress, rating, closing, lat, lng, key }) => (
+      {shops.map(
+        ({ name, price, addressShop, rating, hours, position, id }) => (
           <AdvancedMarker
-            position={{ lat, lng }}
-            key={key}
+            position={{
+              lat: parseFloat(position.split(',')[0].slice(1)),
+              lng: parseFloat(position.split(',')[1].slice(0, -1)),
+            }}
+            key={id}
             onClick={() => {
               setSelectedPlace({
                 name,
                 price,
-                adress,
+                address: addressShop,
                 rating,
-                closing,
-                position: { lat, lng },
+                closing: hours,
+                position: {
+                  lat: parseFloat(position.split(',')[0].slice(1)),
+                  lng: parseFloat(position.split(',')[1].slice(0, -1)),
+                },
               });
               openModal();
             }}
