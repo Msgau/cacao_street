@@ -1,4 +1,5 @@
 [
+    { "id": "Opn", "label": "Aucun", "abbr": "opn" },
     { "id": "lundi", "label": "Lundi", "abbr": "lun" },
     { "id": "mardi", "label": "Mardi", "abbr": "mar" },
     { "id": "mercredi", "label": "Mercredi", "abbr": "mer" },

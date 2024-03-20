@@ -25,8 +25,9 @@ const MapTool = ({ classNameMap }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:8989/chocolate");
-        setShops(response.data.data);
-        console.log(response.data.data)
+        const shopsInfo = response.data.data;
+        setShops(shopsInfo);
+        console.log(shopsInfo);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -35,6 +36,7 @@ const MapTool = ({ classNameMap }) => {
   }, []);
 
   const openModal = () => {
+    // console.log(selectedPlace.name);
     setIsModalOpen(true);
   };
 
@@ -42,7 +44,7 @@ const MapTool = ({ classNameMap }) => {
     e.stopPropagation(); // Arrête la propagation de l'événement de clic
     setIsModalOpen(false); // Met à jour l'état pour fermer la modal
   };
-  
+
 
   // Fonction pour déterminer si le lieu est ouvert aujourd'hui
   const isOpenToday = () => {
@@ -91,7 +93,15 @@ const MapTool = ({ classNameMap }) => {
                     <div>Note : {selectedPlace.rating}/5</div>
                     <h3>{selectedPlace.name}</h3>
                     {selectedPlace.price && <p>Prix: {selectedPlace.price} €</p>}
-                    <p>{selectedPlace.address}</p>
+                    <p>
+                      {selectedPlace.address && selectedPlace.address.split(',').map((part, index) => (
+                        <span key={index}>
+                          {index > 0 && <br />} {/* Ajoute un retour à la ligne après la première virgule */}
+                          {part}
+                        </span>
+                      ))}
+                    </p>
+
                     {/* Afficher le statut d'ouverture */}
                     <p>{openStatus}</p>
                     {/* Utilisation du composant HiddenContent pour afficher/masquer les jours d'ouverture */}
@@ -141,30 +151,33 @@ const Markers = ({ shops, setSelectedPlace, openModal }) => {
   return (
     <>
       {shops.map(
-        ({ name, price, addressShop, rating, hours, position, id }) => (
-          <AdvancedMarker
-            position={{
-              lat: parseFloat(position.split(',')[0].slice(1)),
-              lng: parseFloat(position.split(',')[1].slice(0, -1)),
-            }}
-            key={id}
-            onClick={() => {
-              setSelectedPlace({
-                name,
-                price,
-                address: addressShop,
-                rating,
-                closing: hours,
-                position: {
-                  lat: parseFloat(position.split(',')[0].slice(1)),
-                  lng: parseFloat(position.split(',')[1].slice(0, -1)),
-                },
-              });
-              openModal();
-            }}
-          >
-            <span style={{ fontSize: "2rem" }}>☕</span>
-          </AdvancedMarker>
+        ({ name, price, addressShop, rating, hours, position, id, allowed }) => (
+          // Ajouter une condition pour vérifier si le shop est autorisé
+          allowed && (
+            <AdvancedMarker
+              position={{
+                lat: parseFloat(position.split(',')[0].slice(1)),
+                lng: parseFloat(position.split(',')[1].slice(0, -1)),
+              }}
+              key={id}
+              onClick={() => {
+                setSelectedPlace({
+                  name,
+                  price,
+                  address: addressShop,
+                  rating,
+                  closing: hours,
+                  position: {
+                    lat: parseFloat(position.split(',')[0].slice(1)),
+                    lng: parseFloat(position.split(',')[1].slice(0, -1)),
+                  },
+                });
+                openModal();
+              }}
+            >
+              <span style={{ fontSize: "2rem" }}>☕</span>
+            </AdvancedMarker>
+          )
         )
       )}
     </>

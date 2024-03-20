@@ -29,12 +29,31 @@ const Dashboard: React.FC = () => {
     const navigate = useNavigate();
     const [shops, setShops] = useState<Shop[]>([]);
 
+    const handleValidate = async (id: number) => {
+        try {
+            const token = localStorage.getItem("token");
+            const headers = {
+                "x-access-token": token
+            };
+            // Effectuer la mise à jour du statut allowed du shop
+            await axios.patch(`http://localhost:8989/chocolate/${id}`, { allowed: true }, { headers });
+            // On met à jour le state des shops en local
+            setShops(shops.map(shop => shop.id === id ? { ...shop, allowed: true } : shop));
+            // On supprime l'objet patché du dom.
+            setShops(shops.filter(shop => shop.id !== id));
+        } catch (error) {
+            console.error("Error validating shop:", error);
+        }
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get<Shop[]>("http://localhost:8989/chocolate");
-                const shopsValidation = response.data.data
-                setShops(shopsValidation);
+                const shopsValidation = response.data.data;
+                // Filtrer les shops dont le statut allowed est à false
+                const filteredShops = shopsValidation.filter(shop => !shop.allowed);
+                setShops(filteredShops);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -59,7 +78,7 @@ const Dashboard: React.FC = () => {
             Authorization: `Bearer ${token}`
         }
     };
-    
+
     const handleDelete = async (id: number) => {
         try {
             const token = localStorage.getItem("token");
@@ -73,8 +92,7 @@ const Dashboard: React.FC = () => {
             console.error("Error deleting shop:", error);
         }
     };
-    
-    
+
     return (
         <div>
             <Header />
@@ -85,13 +103,14 @@ const Dashboard: React.FC = () => {
                             return (
                                 <NewPlace
                                     id={shop.id}
-                                    key={shop.id} 
+                                    key={shop.id}
                                     placeName={shop.name}
                                     addressShop={shop.addressShop}
-                                    price = {shop.price}
+                                    price={shop.price}
                                     placeDetails={`${shop.position}`}
                                     onDelete={() => handleDelete(shop.id)}
                                     closing={shop.hours}
+                                    onValidate={() => handleValidate(shop.id)}
                                 />
                             );
                         })}
@@ -99,9 +118,8 @@ const Dashboard: React.FC = () => {
                     <div className="right">
                         <input type="text" className="searchDtb" placeholder="Recherche dans la base de données" />
                         <div className="resultsBdd">Résultats recherche BDD</div>
-                        <div className="dashboardMapContainer">
-                            <MapTool classNameMap={"dashboardMap"} />
-                        </div>
+
+                        <MapTool classNameMap={"dashboardMap"} />
                     </div>
                 </div>
             </div>
