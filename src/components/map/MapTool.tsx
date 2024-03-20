@@ -36,17 +36,14 @@ const MapTool = ({ classNameMap }) => {
   }, []);
 
   const openModal = () => {
-    // console.log(selectedPlace.name);
     setIsModalOpen(true);
   };
 
   const closeModal = (e) => {
-    e.stopPropagation(); // Arrête la propagation de l'événement de clic
-    setIsModalOpen(false); // Met à jour l'état pour fermer la modal
+    e.stopPropagation();
+    setIsModalOpen(false);
   };
 
-
-  // Fonction pour déterminer si le lieu est ouvert aujourd'hui
   const isOpenToday = () => {
     if (!selectedPlace || !selectedPlace.closing) return false;
     const currentDayOfWeek = new Date().toLocaleDateString("fr-FR", {
@@ -58,7 +55,6 @@ const MapTool = ({ classNameMap }) => {
     return !selectedPlace.closing.includes(currentDayOfWeek);
   };
 
-  // Utilisation du résultat pour afficher le statut d'ouverture dans la modal
   const openStatus = isOpenToday() ? "ouvert aujourd'hui" : "fermé aujourd'hui";
 
   return (
@@ -96,44 +92,50 @@ const MapTool = ({ classNameMap }) => {
                     <p>
                       {selectedPlace.address && selectedPlace.address.split(',').map((part, index) => (
                         <span key={index}>
-                          {index > 0 && <br />} {/* Ajoute un retour à la ligne après la première virgule */}
+                          {index > 0 && <br />}
                           {part}
                         </span>
                       ))}
                     </p>
 
-                    {/* Afficher le statut d'ouverture */}
-                    <p>{openStatus}</p>
-                    {/* Utilisation du composant HiddenContent pour afficher/masquer les jours d'ouverture */}
-                    <HiddenContent
-                      collapseTitle="Jours d'ouverture"
-                      collapseDescription={
-                        <p>
-                          {[
-                            "Lundi",
-                            "Mardi",
-                            "Mercredi",
-                            "Jeudi",
-                            "Vendredi",
-                            "Samedi",
-                            "Dimanche",
-                          ].map((day) => {
-                            const dayAbbreviation = day.substring(0, 3).toLowerCase();
-                            const isOpenDay =
-                              selectedPlace.closing &&
-                              !selectedPlace.closing.includes(dayAbbreviation);
-                            return (
-                              <span
-                                key={dayAbbreviation}
-                                className={isOpenDay ? "openDay" : "closedDay"}
-                              >
-                                {isOpenDay ? day : <s>{day}</s>}
-                              </span>
-                            );
-                          })}
-                        </p>
-                      }
-                    />
+                    {selectedPlace && selectedPlace.closing !== '""' ? (
+                      <>
+                        <p>{openStatus}</p>
+                        <HiddenContent
+                          collapseTitle="Jours d'ouverture"
+                          collapseDescription={
+                            <p>
+                              {[
+                                "Lundi",
+                                "Mardi",
+                                "Mercredi",
+                                "Jeudi",
+                                "Vendredi",
+                                "Samedi",
+                                "Dimanche",
+                              ].map((day) => {
+                                const dayAbbreviation = day.substring(0, 3).toLowerCase();
+                                const isOpenDay =
+                                  selectedPlace.closing &&
+                                  !selectedPlace.closing.includes(dayAbbreviation);
+                                return (
+                                  <span
+                                    key={dayAbbreviation}
+                                    className={isOpenDay ? "openDay" : "closedDay"}
+                                  >
+                                    {isOpenDay ? day : <s>{day}</s>}
+                                  </span>
+                                );
+                              })}
+                            </p>
+                          }
+                        />
+                      </>
+                    ):
+                    <>
+                    <p>Jours d'ouverture non communiqués</p>
+                    </>
+                    }
                   </div>
                 </div>
               </>
@@ -152,7 +154,6 @@ const Markers = ({ shops, setSelectedPlace, openModal }) => {
     <>
       {shops.map(
         ({ name, price, addressShop, rating, hours, position, id, allowed }) => (
-          // Ajouter une condition pour vérifier si le shop est autorisé
           allowed && (
             <AdvancedMarker
               position={{
