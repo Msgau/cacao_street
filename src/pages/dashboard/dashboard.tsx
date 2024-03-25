@@ -66,6 +66,17 @@ const Dashboard: React.FC = () => {
         }
     };
 
+    const handleDeleteReport = async (id: number) => {
+        try {
+            const headers = {
+                "x-access-token": token
+            };
+            await axios.delete(`http://localhost:8989/reporting/${id}`, { headers });
+        } catch (error) {
+            console.error("Error deleting report :", error);
+        }
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -138,7 +149,7 @@ const Dashboard: React.FC = () => {
                                         price={shop.price}
                                         placeDetails={`${shop.position}`}
                                         onDelete={() => handleDelete(shop.id)}
-                                        closing={shop.hours} // Assuming hours field is properly populated
+                                        closing={shop.hours}
                                         onValidate={() => handleValidatePlace(shop.id)}
                                     />
                                 );
@@ -155,6 +166,7 @@ const Dashboard: React.FC = () => {
                                         userId={report.user_Id}
                                         shopId={report.chocolate_Id}
                                         onClose={() => handleCloseReport(report.id)}
+                                        onDeleteReport={() => handleDeleteReport(report.id)}
                                     />
                                 );
                             })}
