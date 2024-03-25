@@ -32,5 +32,6 @@
 }
 .buttonsUserRequest {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin: 0 10px;
 }

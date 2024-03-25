@@ -10,6 +10,8 @@ import PlaceAutocompleteClassic from "../../components/PlaceAutoComplete/PlaceAu
 import MapHandler from "../../components/map-handler/map-handler.js";
 import HiddenContent from "../../components/HiddentContent/HiddenContent.jsx";
 import axios from "axios";
+import './MapTool.css';
+import Report from "../Report/Report.js";
 
 const API_KEY = config.googleMapsApiKey;
 const MAP_ID = config.mapId;
@@ -20,6 +22,7 @@ const MapTool = ({ classNameMap }) => {
   const [selectedPosition, setSelectedPosition] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [shops, setShops] = useState([]);
+  const [reportWindow, setReportWindow] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +38,32 @@ const MapTool = ({ classNameMap }) => {
     fetchData();
   }, []);
 
+
+  const reportShop = async (reportText, userToken, shopId) => {
+      try {
+          const token = localStorage.getItem('token');
+          const headers = {
+              'x-access-token': token,
+              'Content-Type': 'application/json' // Indique le type de contenu JSON
+          };
+  
+          const requestBody = {
+              body: reportText,
+              chocolate_Id: shopId.id
+          };
+          console.log(requestBody);
+          // Envoi de la requête POST avec Axios
+          const response = await axios.post('http://localhost:8989/reporting', requestBody, { headers });
+  
+          console.log('Report submitted:', response.data);
+  
+      } catch (error) {
+          console.error('Error submitting report:', error);
+      }
+  };
+  
+
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -42,6 +71,7 @@ const MapTool = ({ classNameMap }) => {
   const closeModal = (e) => {
     e.stopPropagation();
     setIsModalOpen(false);
+    setReportWindow(false);
   };
 
   const isOpenToday = () => {
@@ -131,11 +161,14 @@ const MapTool = ({ classNameMap }) => {
                           }
                         />
                       </>
-                    ):
-                    <>
-                    <p>Jours d'ouverture non communiqués</p>
-                    </>
+                    ) :
+                      <p>Jours d'ouverture non communiqués</p>
                     }
+                    {reportWindow && (
+                      <Report onSend={(reportText, userToken) => reportShop(reportText, userToken, selectedPlace)} />
+                    )}
+
+                    <button title="signaler une problème" className={`${isModalOpen ? 'reportButton' : 'none'}`} onClick={() => setReportWindow(true)}>!</button>
                   </div>
                 </div>
               </>
@@ -163,6 +196,7 @@ const Markers = ({ shops, setSelectedPlace, openModal }) => {
               key={id}
               onClick={() => {
                 setSelectedPlace({
+                  id,
                   name,
                   price,
                   address: addressShop,

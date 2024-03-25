@@ -5,6 +5,7 @@ import "./dashboard.css";
 import MapTool from "../../components/map/MapTool";
 import NewPlace from "../../components/DashboardRequest/NewPlace";
 import axios from "axios";
+import ReportCard from "../../components/ReportCard/ReportCard";
 
 interface User {
     id: number;
@@ -22,27 +23,46 @@ interface Shop {
     hours: JSON | null;
 }
 
+interface Report {
+    id: number;
+    body: string;
+    user_Id: number;
+    chocolate_Id: number;
+    isClose: boolean;
+}
+
 const Dashboard: React.FC = () => {
     const user: User | null = JSON.parse(localStorage.getItem("user") || "null");
-    const isAdmin: boolean =
-        !!user && !!user.roles && user.roles.includes("ROLE_ADMIN");
+    const isAdmin: boolean = !!user && !!user.roles && user.roles.includes("ROLE_ADMIN");
     const navigate = useNavigate();
     const [shops, setShops] = useState<Shop[]>([]);
+    const [reports, setReports] = useState<Report[]>([]);
+    const token = localStorage.getItem("token");
 
-    const handleValidate = async (id: number) => {
+    const handleValidatePlace = async (id: number) => {
         try {
-            const token = localStorage.getItem("token");
             const headers = {
                 "x-access-token": token
             };
-            // Effectuer la mise à jour du statut allowed du shop
             await axios.patch(`http://localhost:8989/chocolate/${id}`, { allowed: true }, { headers });
-            // On met à jour le state des shops en local
-            setShops(shops.map(shop => shop.id === id ? { ...shop, allowed: true } : shop));
-            // On supprime l'objet patché du dom.
-            setShops(shops.filter(shop => shop.id !== id));
+            setShops(prevShops => prevShops.map(shop => shop.id === id ? { ...shop, allowed: true } : shop));
+            setShops(prevShops => prevShops.filter(shop => shop.id !== id));
         } catch (error) {
             console.error("Error validating shop:", error);
+        }
+    };
+
+    const handleCloseReport = async (id: number) => {
+        try {
+            const headers = {
+                "x-access-token": token
+            };
+            console.log(id)
+            await axios.patch(`http://localhost:8989/reporting/${id}`, { isClose: true }, { headers });
+            setReports(prevReports => prevReports.map(report => report.id === id ? { ...report, isClose: true } : report));
+            setReports(prevReports => prevReports.filter(report => report.id !== id));
+        } catch (error) {
+            console.error("Error closing report:", error);
         }
     };
 
@@ -51,7 +71,6 @@ const Dashboard: React.FC = () => {
             try {
                 const response = await axios.get<Shop[]>("http://localhost:8989/chocolate");
                 const shopsValidation = response.data.data;
-                // Filtrer les shops dont le statut allowed est à false
                 const filteredShops = shopsValidation.filter(shop => !shop.allowed);
                 setShops(filteredShops);
             } catch (error) {
@@ -60,6 +79,24 @@ const Dashboard: React.FC = () => {
         };
         fetchData();
     }, []);
+
+    useEffect(() => {
+        const fetchReport = async () => {
+            try {
+                if (token) {
+                    const headers = {
+                        "x-access-token": token
+                    };
+                    const response = await axios.get<Report[]>("http://localhost:8989/reporting", { headers });
+                    const reportData = response.data.data;
+                    setReports(reportData);
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchReport();
+    }, [token]);
 
     useEffect(() => {
         if (!isAdmin) {
@@ -71,23 +108,13 @@ const Dashboard: React.FC = () => {
         return null;
     }
 
-    const token = localStorage.getItem("token");
-
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    };
-
     const handleDelete = async (id: number) => {
         try {
-            const token = localStorage.getItem("token");
             const headers = {
                 "x-access-token": token
             };
             await axios.delete(`http://localhost:8989/chocolate/${id}`, { headers });
-            // Mettre à jour le dom
-            setShops(shops.filter(shop => shop.id !== id));
+            setShops(prevShops => prevShops.filter(shop => shop.id !== id));
         } catch (error) {
             console.error("Error deleting shop:", error);
         }
@@ -99,26 +126,47 @@ const Dashboard: React.FC = () => {
             <div className="dashboard">
                 <div className="dashboardMain">
                     <div className="usersRequest">
-                        {shops.map((shop) => {
-                            return (
-                                <NewPlace
-                                    id={shop.id}
-                                    key={shop.id}
-                                    placeName={shop.name}
-                                    addressShop={shop.addressShop}
-                                    price={shop.price}
-                                    placeDetails={`${shop.position}`}
-                                    onDelete={() => handleDelete(shop.id)}
-                                    closing={shop.hours}
-                                    onValidate={() => handleValidate(shop.id)}
-                                />
-                            );
-                        })}
+                        <div className="NewPlaces">
+                            <h2>Nouveaux ajouts :</h2>
+                            {shops.map((shop) => {
+                                return (
+                                    <NewPlace
+                                        id={shop.id}
+                                        key={shop.id}
+                                        placeName={shop.name}
+                                        addressShop={shop.addressShop}
+                                        price={shop.price}
+                                        placeDetails={`${shop.position}`}
+                                        onDelete={() => handleDelete(shop.id)}
+                                        closing={shop.hours} // Assuming hours field is properly populated
+                                        onValidate={() => handleValidatePlace(shop.id)}
+                                    />
+                                );
+                            })}
+                        </div>
+                        <div className="reports">
+                            <h2>Reports :</h2>
+                            <div className="reports">
+                                <h2>Reports :</h2>
+                                {reports.filter(report => !report.isClose).map((report) => {
+                                    return (
+                                        <ReportCard
+                                            key={report.id}
+                                            id={report.id}
+                                            reportBody={report.body}
+                                            userId={report.user_Id}
+                                            shopId={report.chocolate_Id}
+                                            onClose={() => handleCloseReport(report.id)}
+                                        />
+                                    );
+                                })}
+                            </div>
+
+                        </div>
                     </div>
                     <div className="right">
                         <input type="text" className="searchDtb" placeholder="Recherche dans la base de données" />
                         <div className="resultsBdd">Résultats recherche BDD</div>
-
                         <MapTool classNameMap={"dashboardMap"} />
                     </div>
                 </div>

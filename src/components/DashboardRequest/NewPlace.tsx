@@ -9,13 +9,10 @@ interface NewPlaceProps {
     id: number;
     onDelete: () => void;
     onValidate: () => void;
-    closing: string;
+    closing: JSON | null;
 }
 
-const NewPlace: React.FC<NewPlaceProps> = ({ placeName, placeDetails, addressShop, price, id, onDelete, closing, onValidate }) => {
-    const handleDeleteClick = () => {
-        onDelete(); // Appeler la fonction de suppression lorsque le bouton est cliqué
-    };
+const NewPlace: React.FC<NewPlaceProps> = ({ placeName, placeDetails, addressShop, price, onDelete, closing, onValidate }) => {
 
     const formatAddress = (address: string) => {
         const firstCommaIndex = address.indexOf(',');
@@ -44,9 +41,9 @@ const NewPlace: React.FC<NewPlaceProps> = ({ placeName, placeDetails, addressSho
             </div>
             
             <div className='buttonsUserRequest'>
-                <button className='putButton'>modifier</button>
                 <button className='validationButton' onClick={onValidate}>Valider</button>
-                <button className='deleteButton' onClick={handleDeleteClick}>X</button>
+                <button className='putButton'>modifier</button>
+                <button className='deleteButton' onClick={onDelete}>X</button>
             </div>
         </div>
     );
