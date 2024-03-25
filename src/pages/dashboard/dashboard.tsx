@@ -146,22 +146,18 @@ const Dashboard: React.FC = () => {
                         </div>
                         <div className="reports">
                             <h2>Reports :</h2>
-                            <div className="reports">
-                                <h2>Reports :</h2>
-                                {reports.filter(report => !report.isClose).map((report) => {
-                                    return (
-                                        <ReportCard
-                                            key={report.id}
-                                            id={report.id}
-                                            reportBody={report.body}
-                                            userId={report.user_Id}
-                                            shopId={report.chocolate_Id}
-                                            onClose={() => handleCloseReport(report.id)}
-                                        />
-                                    );
-                                })}
-                            </div>
-
+                            {reports.filter(report => !report.isClose).map((report) => {
+                                return (
+                                    <ReportCard
+                                        key={report.id}
+                                        id={report.id}
+                                        reportBody={report.body}
+                                        userId={report.user_Id}
+                                        shopId={report.chocolate_Id}
+                                        onClose={() => handleCloseReport(report.id)}
+                                    />
+                                );
+                            })}
                         </div>
                     </div>
                     <div className="right">
