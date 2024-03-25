@@ -57,7 +57,6 @@ const Dashboard: React.FC = () => {
             const headers = {
                 "x-access-token": token
             };
-            console.log(id)
             await axios.patch(`http://localhost:8989/reporting/${id}`, { isClose: true }, { headers });
             setReports(prevReports => prevReports.map(report => report.id === id ? { ...report, isClose: true } : report));
             setReports(prevReports => prevReports.filter(report => report.id !== id));

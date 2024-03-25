@@ -30,7 +30,6 @@ const MapTool = ({ classNameMap }) => {
         const response = await axios.get("http://localhost:8989/chocolate");
         const shopsInfo = response.data.data;
         setShops(shopsInfo);
-        console.log(shopsInfo);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -51,7 +50,6 @@ const MapTool = ({ classNameMap }) => {
               body: reportText,
               chocolate_Id: shopId.id
           };
-          console.log(requestBody);
           // Envoi de la requête POST avec Axios
           const response = await axios.post('http://localhost:8989/reporting', requestBody, { headers });
   
