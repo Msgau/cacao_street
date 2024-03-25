@@ -3,7 +3,6 @@ import Error404 from './error404/error404';
 import Home from './home/Home';
 import PostEmplacement from './emplacement/emplacement';
 import Login from './connexion/Connexion';
-import Login2 from './connexion/ConnexionOld';
 import SignUp from './connexion/Inscription';
 import Profile from '../components/test_co/profile.component';
 import Dashboard from './dashboard/dashboard';
@@ -20,7 +19,6 @@ function RouteConfiguration() {
             <Route path="/*" element={<Error404 />} />
             <Route path="/addplace" element={<PostEmplacement />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/login2" element={<Login2 />} />
             <Route path="/signup" element={<SignUp />} />       
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
