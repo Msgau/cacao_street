@@ -31,7 +31,7 @@ const NewPlace: React.FC<NewPlaceProps> = ({ placeName, placeDetails, addressSho
     };
 
     return (
-        <div className="exempleUser">
+        <div className="exampleUser">
             <h3>Nom : {placeName}</h3>
             <p title={addressShop}><b>Adresse :</b> {formatAddress(addressShop)}</p>
             <p title={placeDetails}><b>Coordonnées :</b> {placeDetails}</p>

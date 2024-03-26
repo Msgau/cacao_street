@@ -163,10 +163,10 @@ const MapTool = ({ classNameMap }) => {
                       <p>Jours d'ouverture non communiqués</p>
                     }
                     {reportWindow && (
-                      <Report onSend={(reportText, userToken) => reportShop(reportText, userToken, selectedPlace)} />
+                      <Report setReportWindow= {setReportWindow} onSend={(reportText, userToken) => reportShop(reportText, userToken, selectedPlace)} />
                     )}
 
-                    <button title="signaler une problème" className={`${isModalOpen ? 'reportButton' : 'none'}`} onClick={() => setReportWindow(true)}>!</button>
+                    <button title="signaler une problème" className={`${isModalOpen ? 'displayReportButton' : 'none'}`} onClick={() => setReportWindow(true)}>!</button>
                   </div>
                 </div>
               </>
