@@ -38,13 +38,13 @@
     flex-direction: column;
     align-items: center;
 }
-.connexion p {
+.loginPage p {
     text-decoration: underline;
 }
-.connexion a {
+.loginPage a {
     color: white;
     text-decoration: none;
 }
-.connexion p:hover {
+.loginPage p:hover {
     text-decoration: none;
 }

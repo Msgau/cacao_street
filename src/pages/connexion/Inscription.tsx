@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../../components/Header/Header';
 import './Connexion.css';
+import config from '../../config';
+
+const API_URL_SIGNUP = config.url_signup;
+const emailRegex = config.regex;
 
 const SignUp: React.FC = () => {
   const [userName, setUserName] = useState('');
@@ -13,23 +17,29 @@ const SignUp: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateEmail(email)) {
+      setError('Adresse e-mail invalide');
+      return;
+    }
     try {
-      const response = await axios.post('http://localhost:8989/api/auth/signup', {
+      const response = await axios.post(API_URL_SIGNUP, {
         username: userName,
         email: email,
         password: password,
         roles: ['user']
       });
-      const data = response.data;
-      console.log(data);
-      if (data.message === "User was registered successfully!") {
+      if (response.status === 200) {
         navigate('/login');
       } else {
         setError('Erreur lors de la création de compte');
       }
     } catch (error) {
-      setError('Une erreur s\'est produite lors de la création de compte');
+      setError('Une erreur s\'est produite lors de la création de compte: ' + error.message);
     }
+  };
+
+  const validateEmail = (email: string) => {
+    return emailRegex.test(email);
   };
 
   return (
