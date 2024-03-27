@@ -15,6 +15,8 @@ import Report from "../Report/Report.js";
 
 const API_KEY = config.googleMapsApiKey;
 const MAP_ID = config.mapId;
+const URL_GET_ALL_CHOCOLATE = config.url_get_all_chocolate;
+const URL_POST_REPORTING = config.url_post_reporting;
 
 const MapTool = ({ classNameMap }) => {
   const [userLocation, setUserLocation] = useState(null);
@@ -27,7 +29,7 @@ const MapTool = ({ classNameMap }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8989/chocolate");
+        const response = await axios.get(URL_GET_ALL_CHOCOLATE);
         const shopsInfo = response.data.data;
         setShops(shopsInfo);
       } catch (error) {
@@ -51,7 +53,7 @@ const MapTool = ({ classNameMap }) => {
               chocolate_Id: shopId.id
           };
           // Envoi de la requête POST avec Axios
-          const response = await axios.post('http://localhost:8989/reporting', requestBody, { headers });
+          const response = await axios.post(URL_POST_REPORTING, requestBody, { headers });
   
           console.log('Report submitted:', response.data);
   

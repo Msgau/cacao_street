@@ -41,7 +41,8 @@
 }
 
 /* Styles pour la modal */
-.modal.open {
+.modal {
+  /* Autres styles de base */
   position: fixed;
   top: 0;
   left: 0;
@@ -50,6 +51,23 @@
   background-color: white;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transform: translateX(-100%); /* Démarre la modale en dehors de l'écran */
+  transition: transform 0.3s ease; /* Ajoutez une transition pour l'animation */
+}
+
+.modal.open {
+  transform: translateX(0); /* Déplace la modale vers la gauche (0) pour l'ouvrir */
+}
+
+/* Autres styles de bouton */
+.bouton {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Pour masquer le bouton pendant l'animation */
+.modal:not(.open) .bouton {
+  visibility: hidden;
 }
 
 .modal button {
