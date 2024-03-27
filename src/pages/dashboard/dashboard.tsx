@@ -60,6 +60,7 @@ const Dashboard: React.FC = () => {
             await axios.patch(`http://localhost:8989/reporting/${id}`, { isClose: true }, { headers });
             setReports(prevReports => prevReports.map(report => report.id === id ? { ...report, isClose: true } : report));
             setReports(prevReports => prevReports.filter(report => report.id !== id));
+            console.log("Report archivé !")
         } catch (error) {
             console.error("Error closing report:", error);
         }
@@ -71,6 +72,8 @@ const Dashboard: React.FC = () => {
                 "x-access-token": token
             };
             await axios.delete(`http://localhost:8989/reporting/${id}`, { headers });
+            setReports(prevReports => prevReports.filter(report => report.id !== id));
+            console.log("Report Supprimé !")
         } catch (error) {
             console.error("Error deleting report :", error);
         }

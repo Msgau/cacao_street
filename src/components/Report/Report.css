@@ -1,0 +1,12 @@
+.reportWindow {
+    display: flex;
+    flex-direction: column;
+}
+.sendReportButtons {
+    display: flex;
+    justify-content: space-between;
+}
+.inputReport {
+    height: 100px;
+    margin: 10px 0;
+}

@@ -34,7 +34,7 @@ const Header: React.FC = () => {
       <div className="baseHeader">
       <h1>
         <NavLink to="/home" className="home">
-          CACAOSTREET
+        &gt;CACAOSTREET
         </NavLink>
       </h1>
       <nav>

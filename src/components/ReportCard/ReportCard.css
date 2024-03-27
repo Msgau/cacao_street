@@ -1,4 +1,4 @@
-.exampleUser {
+.reportsBlock {
     width: 90%;
     min-height: 180px;
     background-color: rgb(209, 209, 209);
@@ -11,27 +11,28 @@
     justify-content: space-between;
     padding: 10px;
 }
-.exampleUser h3 {
+.reportsBlock h3 {
     margin: 0 0 0 5px;
     width: 90%;
 }
-.exampleUser p {
+.reportsBlock p {
     margin: 0 0 0 5px;
-    white-space: nowrap;
     font-size: 0.9em;
 }
-.priceOpening{
-    display: flex;
-}
-.masquer {
-    display: none;
-}
-.exampleUser button {
+.reportsBlock button {
     color: white;
     padding: 5px 15px;
 }
-.buttonsUserRequest {
+.reportBody {
+    word-wrap: break-word;
+}
+
+.buttonsUserReport {
     display: flex;
     justify-content: space-between;
-    margin: 0 10px;
+    margin: 10px 10px 0 10px;
 }
+.confirmationButtons {
+    display: flex;
+    justify-content: space-around;
+} 

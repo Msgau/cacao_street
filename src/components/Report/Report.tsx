@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import "./Report.css";
 
-export default function Report({ onSend }) {
+export default function Report({ onSend, setReportWindow }) {
     const [reportText, setReportText] = useState('');
 
     const handleSend = () => {
@@ -26,8 +27,13 @@ export default function Report({ onSend }) {
                 className="inputReport"
                 value={reportText}
                 onChange={handleChange}
+                maxLength={500}
             ></textarea>
-            <button onClick={handleSend}>Envoyer</button>
+            <div className='sendReportButtons'>
+                <button onClick={handleSend}>Envoyer</button>
+                <button onClick={() => setReportWindow(false)}>Retour</button>
+            </div>
+
         </div>
     );
 }

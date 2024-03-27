@@ -1,20 +1,10 @@
 /* Modale */
 
-.reportButton {
+.displayReportButton {
     position: absolute;
     bottom: 10px;
     right: 10px;
 }
 .modal.none {
     display: none;
-}
-
-.reportWindow {
-    display: flex;
-    flex-direction: column;
-}
-
-.inputReport {
-    height: 100px;
-    margin: 10px 0;
 }

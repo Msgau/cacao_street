@@ -17,7 +17,7 @@ header {
 }
 
 header h1 {
-    margin: 0;
+    margin: 10px 0 0 20px;
 }
 
 header a {
@@ -49,6 +49,6 @@ header ul {
 
 .addPlace {
     margin: 0 50px 10px 0;
-    width: 100%;
+    width: 95%;
     text-align: right;
 }

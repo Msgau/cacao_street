@@ -60,12 +60,12 @@ const Login: React.FC = () => {
             <div className="connexion">
               {error && <div>{error}</div>}
               <button type="submit">Se connecter</button>
-              <p>
-                <NavLink to="/signup">Créer un compte</NavLink>
-              </p>
             </div>
           </Form>
         </Formik>
+        <p>
+          <NavLink to="/signup">Créer un compte</NavLink>
+        </p>
       </div>
     </div>
   );
