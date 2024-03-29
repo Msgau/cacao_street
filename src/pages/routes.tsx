@@ -21,7 +21,8 @@ function RouteConfiguration() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />       
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profil" element={<Profile />} />
+            {/* <Route path='/:username' element{Profile} */}
           </Routes>
         </Router>
   

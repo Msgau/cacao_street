@@ -32,47 +32,49 @@ const Header: React.FC = () => {
   return (
     <header>
       <div className="baseHeader">
-      <h1>
-        <NavLink to="/home" className="home">
-        &gt;CACAOSTREET
-        </NavLink>
-      </h1>
-      <nav>
-        <ul>
-          <li>Accueil</li>
-          {/* Vérifier si l'utilisateur est connecté et a le rôle ROLE_USER */}
-          {isLoggedIn ? (
-            <>
-              {isAdmin && (
+        <h1>
+          <NavLink to="/home" className="home">
+            &gt;CACAOSTREET
+          </NavLink>
+        </h1>
+        <nav>
+          <ul>
+            <li>Accueil</li>
+            {/* Vérifier si l'utilisateur est connecté et a le rôle ROLE_USER */}
+            {isLoggedIn ? (
+              <>
+                {isAdmin && (
+                  <li>
+                    <NavLink to="/dashboard" className="dashboardLink">
+                      Dashboard
+                    </NavLink>
+                  </li>
+                )}
                 <li>
-                  <NavLink to="/dashboard" className="dashboardLink">
-                    Dashboard
+                  <NavLink to="/profil" className="profileLink">
+                    Profil
                   </NavLink>
                 </li>
-              )}
+                <li>
+                  <NavLink
+                    to="/home"
+                    className="logoutLink"
+                    onClick={handleLogout}
+                  >
+                    Déconnexion
+                  </NavLink>
+                </li>
+              </>
+            ) : (
               <li>
-                Mes cacaos
-              </li>
-              <li>
-                <NavLink
-                  to="/home"
-                  className="logoutLink"
-                  onClick={handleLogout}
-                >
-                  Déconnexion
+                <NavLink to="/login" className="loginLink">
+                  Connexion
                 </NavLink>
               </li>
-            </>
-          ) : (
-            <li>
-              <NavLink to="/login" className="loginLink">
-                Connexion
-              </NavLink>
-            </li>
-          )}
-          {/* <li>Mes cacaos</li> */}
-        </ul>
-      </nav>
+            )}
+            {/* <li>Mes cacaos</li> */}
+          </ul>
+        </nav>
       </div>
       {isLoggedIn ? (
         <div className="addPlace">
