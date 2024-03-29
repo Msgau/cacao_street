@@ -2,6 +2,7 @@ import { Component } from "react";
 import { Navigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import IUser from "../../types/user.type";
+import './profile.css';
 
 type Props = {};
 
@@ -36,19 +37,14 @@ export default class Profile extends Component<Props, State> {
     const { currentUser } = this.state;
 
     return (
-      <div className="container">
+      <div className="ProfileContainer">
         {(this.state.userReady) ?
           <div>
             <header className="jumbotron">
               <h3>
-                <strong>{currentUser.username}</strong> Profile
+              Profil de <strong>{currentUser.username}</strong> 
               </h3>
             </header>
-            <p>
-              <strong>Token:</strong>{" "}
-              {currentUser.accessToken.substring(0, 20)} ...{" "}
-              {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-            </p>
             <p>
               <strong>Id:</strong>{" "}
               {currentUser.id}
