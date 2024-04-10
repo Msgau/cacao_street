@@ -113,26 +113,21 @@ export default function PostEmplacement() {
                         onChange={(e) => setPrice(e.target.value)}
                         placeholder="Prix du chocolat chaud"
                     />
-
                     <label htmlFor="closing">Jours de fermeture (facultatif) :</label>
                     <ul className="closing-days">
-    {joursSemaine.map(day => (
-        <li key={day.id}>
-            <input
-                type="checkbox"
-                id={day.id}
-                value={day.abbr}
-                checked={hours.includes(day.abbr)}
-                onChange={(e) => handleDayChange(day.abbr, e.target.checked)}
-            />
-            <label htmlFor={day.id}>{day.label}</label>
-        </li>
-    ))}
-</ul>
-
-
-
-
+                        {joursSemaine.map(day => (
+                            <li key={day.id}>
+                                <input
+                                    type="checkbox"
+                                    id={day.id}
+                                    value={day.abbr}
+                                    checked={hours.includes(day.abbr)}
+                                    onChange={(e) => handleDayChange(day.abbr, e.target.checked)}
+                                />
+                                <label htmlFor={day.id}>{day.label}</label>
+                            </li>
+                        ))}
+                    </ul>
                     <button
                         type="submit"
                         title={selectedPosition ? "Envoyer mon chocolat" : "Remplissez le formulaire avant de l'envoyer ! :)"}

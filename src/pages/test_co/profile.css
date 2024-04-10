@@ -1,0 +1,72 @@
+.ProfileContainer {
+    color: white;
+    margin: auto;
+    width: 1300px;
+}
+
+/* Style pour la modale */
+.patchUserModal {
+    position: fixed;
+    /* Positionnement fixe pour rester au-dessus du contenu */
+    z-index: 1;
+    /* Positionnement z pour être au-dessus de tout */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Pleine largeur */
+    height: 100%;
+    /* Pleine hauteur */
+    overflow: auto;
+    /* Activer le défilement si nécessaire */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Fond sombre semi-transparent */
+}
+
+/* Contenu de la modale */
+.modal-content {
+    background-color: black;
+    color: white;
+    margin: 15% auto;
+    border-radius: 10px;
+    /* 15% du haut et centré horizontalement */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 2px solid chocolate;
+    width: 500px;
+    /* Largeur de la modale */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+}
+.patchButtons button {
+    color: white;
+    background-color: black;
+}
+.patchUserForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.patchUserForm input, .patchUserForm button {
+    margin: 10px auto;
+}
+
+/* Bouton de fermeture */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 10px;
+}
+
+.close:hover,
+.close:focus {
+    color: chocolate;
+    text-decoration: none;
+    cursor: pointer;
+}
