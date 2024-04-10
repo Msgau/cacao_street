@@ -1,3 +1,4 @@
+/* Styles des buttons désactivés dans app.Css */
 
 .postEmplacement {
     color: white;
@@ -17,14 +18,7 @@
 .postEmplacement button {
     margin: 30px 0 10px 0;
 }
-.formOk {
-    background-color: chocolate;
-}
-.formNotOk {
-    background-color: grey;
-    opacity: 80%;
-    color: white;
-}
+
 .formNotOk:hover {
     border: none;
 }

@@ -1,3 +1,5 @@
+/* Styles des buttons désactivés dans app.css */
+
 .ProfileContainer {
     color: white;
     margin: auto;
@@ -35,6 +37,7 @@
     flex-direction: column;
     border: 2px solid chocolate;
     width: 500px;
+    height: 400px;
     /* Largeur de la modale */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     position: relative;
@@ -49,7 +52,7 @@
     align-items: center;
     flex-direction: column;
 }
-.patchUserForm input, .patchUserForm button {
+.patchUserForm input, .buttonContainerForm {
     margin: 10px auto;
 }
 
@@ -69,4 +72,14 @@
     color: chocolate;
     text-decoration: none;
     cursor: pointer;
+}
+
+.buttonContainerForm {
+    height: 44px;
+}
+
+.error {
+    font-size: 0.9em;
+    text-align: center;
+    margin: auto 10px;
 }
