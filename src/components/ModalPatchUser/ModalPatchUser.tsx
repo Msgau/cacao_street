@@ -13,9 +13,10 @@ interface ModalPatchUserProps {
     type2?: string;
     type3?: string;
     isFormValid: string;
+    informationMessage: string;
 }
 
-const ModalPatchUser: React.FC<ModalPatchUserProps> = ({ isOpen, onClose, onSubmit, handleChange, errorMessage, isFormValid, title, label1, label2, label3, type1, type2, type3 }) => {
+const ModalPatchUser: React.FC<ModalPatchUserProps> = ({ isOpen, onClose, onSubmit, handleChange, errorMessage, informationMessage, isFormValid, title, label1, label2, label3, type1, type2, type3 }) => {
     return (
         <>
             {isOpen && (
@@ -43,6 +44,7 @@ const ModalPatchUser: React.FC<ModalPatchUserProps> = ({ isOpen, onClose, onSubm
                                 </>
                             )}
                             {errorMessage && <p className="error">{errorMessage}</p>}
+                            {informationMessage && <p className="informationMessage">{informationMessage}</p>}
                             <div className="buttonContainerForm">
                                 <button type="submit" disabled={!isFormValid} className={isFormValid ? "formOk" : "formNotOk"} title={isFormValid ? "Envoyer" : "Remplissez tous les champs !"}>Modifier</button>
                             </div>

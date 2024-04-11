@@ -83,3 +83,6 @@
     text-align: center;
     margin: auto 10px;
 }
+.informationMessage {
+    color: green;
+}
