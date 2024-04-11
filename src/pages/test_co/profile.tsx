@@ -32,17 +32,23 @@ const Profile = () => {
     setIsModalOpen(!isModalOpen);
   }
   const toggleModalAdress = () => {
-    setIsModalAdressOpen(!isModalAdressOpen);
+    setIsModalAdressOpen(!isModalAdressOpen)
+    setNewAdress("");
+    setNewAdressPassword("");
   }
 
   const handleCloseModal = () => {
     setErrorMessage("");
     setIsModalOpen(false);
+    setOldPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
   }
   
   const handleCloseModalAddress = () => {
     setIsModalAdressOpen(false);
     setErrorMessage("");
+
   }
   
 
