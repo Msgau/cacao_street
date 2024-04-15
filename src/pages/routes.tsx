@@ -4,7 +4,7 @@ import Home from './home/Home';
 import PostEmplacement from './emplacement/emplacement';
 import Login from './connexion/Connexion';
 import SignUp from './connexion/Inscription';
-import Profile from '../components/test_co/profile.component';
+import Profile from './test_co/profile';
 import Dashboard from './dashboard/dashboard';
 
 function RouteConfiguration() {
